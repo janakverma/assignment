@@ -25,5 +25,5 @@ variable "vpc_cidr" {
 variable "s3_bucket_name" {
   description = "The name of the S3 bucket for Terraform state."
   type        = string
-  default     = "b2cloud-assignment"
+  default     = "b2cloud-assignment-01"
 }

@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket = "your-unique-s3-bucket-name" # Replace with your S3 bucket name from variables.tf
+    bucket = "b2cloud-assignment-01"
     key    = "eks/cluster/b2cloud-assignment/terraform.tfstate"
     region = "eu-north-1"
 
