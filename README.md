@@ -1,2 +1,2 @@
 Trying out the actions feature
-Test1
+Test2
