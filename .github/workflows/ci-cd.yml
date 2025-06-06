@@ -7,9 +7,8 @@ on:
       - master
 
 env:
-  # Set the ECR repository name as an environment variable
+  AWS_REGION: ${{ secrets.AWS_REGION }}
   ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-  # Set the image tag to be the Git commit SHA for versioning
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
@@ -26,7 +25,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
@@ -49,12 +48,11 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Configure AWS credentials
-      # Configure credentials again in case the k8s cluster requires IAM auth (e.g., EKS)
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
