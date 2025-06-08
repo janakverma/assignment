@@ -1,6 +1,5 @@
 name: Build, Push to ECR, and Deploy to Kubernetes
 
-# This workflow triggers on any push to the 'main' branch
 on:
   push:
     branches:
@@ -32,7 +31,6 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build and push Docker image to ECR
-      # This step uses the output from the login step to get the ECR registry URI
       run: |
         docker build -t ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push ${{ steps.login-ecr.outputs.registry }}/$ECR_REPOSITORY:$IMAGE_TAG
@@ -40,7 +38,6 @@ jobs:
   deploy:
     name: Deploy to Kubernetes
     runs-on: ubuntu-latest
-    # This job will only run after the 'build-and-push' job is successful
     needs: build-and-push
 
     steps:
@@ -72,5 +69,7 @@ jobs:
     - name: Deploy to Kubernetes cluster
       run: |
         kubectl apply -f kubernetes/deployment.yml
+        kubectl apply -f kubernetes/service.yml
+        kubectl apply -f kubernetes/hpa.yml
         # Wait for the deployment to complete successfully before finishing the job
-        kubectl rollout status deployment/hello-world-deployment --timeout=60s
+        kubectl rollout status deployment/b2cloud-assignment --timeout=60s

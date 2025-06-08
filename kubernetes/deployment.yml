@@ -1,19 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-deployment
+  name: b2cloud-assignment
 spec:
   replicas: 1 
   selector:
     matchLabels:
-      app: hello-world
+      app: b2cloud-assignment
   template:
     metadata:
       labels:
-        app: hello-world
+        app: b2cloud-assignment
     spec:
       containers:
-      - name: hello-world-app
+      - name: b2cloud-assignment-app
         image: 633154839293.dkr.ecr.eu-north-1.amazonaws.com/b2cloud-assignment/app:latest
         ports:
         - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m" 
+            memory: "128Mi" 
+          limits:
+            cpu: "200m" 
+            memory: "256Mi" 
