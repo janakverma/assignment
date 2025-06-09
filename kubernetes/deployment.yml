@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: b2cloud-assignment-app
-        image: 633154839293.dkr.ecr.eu-north-1.amazonaws.com/b2cloud-assignment/app:latest
+        image: 633154839293.dkr.ecr.eu-north-1.amazonaws.com/b2cloud-assignment/app:3cdf2f50f2b9b83381ca035f3638c0a931275841
         ports:
         - containerPort: 80
         resources:
@@ -23,4 +23,20 @@ spec:
             memory: "128Mi" 
           limits:
             cpu: "200m" 
-            memory: "256Mi" 
+            memory: "256Mi"
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 2
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 3
