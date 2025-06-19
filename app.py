@@ -5,7 +5,7 @@ app = Flask(__name__)
 @app.route('/')
 def hello_world():
     """Serves the main Hello World page."""
-    return '<h1>Hello, World!</h1><p>Welcome to this basic web application.</p>'
+    return '<h1>Hello, World!</h1><p>Welcome to this basic web application created by Janak Verma !!.</p>'
 
 @app.route('/healthz')
 def health_check():

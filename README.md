@@ -4,13 +4,19 @@ This project demonstrates a complete, automated CI/CD pipeline for a simple Pyth
 
 ---
 ### Project Architecture
-**Infrastructure as Code:** AWS infrastructure (VPC, EKS, KMS) is provisioned using Terraform.
-**Application:** A Python Flask app with a "Hello World" endpoint and a /healthz check.
-**Containerization:** A Dockerfile to create a lightweight container image for the app.
-**Container Registry:** AWS Elastic Container Registry (ECR) to store the Docker images.
-**Orchestration:** An AWS Elastic Kubernetes Service (EKS) cluster to run the application.
-**CI/CD:** A GitHub Actions workflow to automate the build, push, and deploy process.
-**Autoscaling:** A Horizontal Pod Autoscaler (HPA) to automatically scale the application pods based on CPU load.
+- **Infrastructure as Code:** AWS infrastructure (VPC, EKS, KMS) is provisioned using Terraform.
+
+- **Application:** A Python Flask app with a "Hello World" endpoint and a /healthz check.
+
+- **Containerization:** A Dockerfile to create a lightweight container image for the app. 
+
+- **Container Registry:** AWS Elastic Container Registry (ECR) to store the Docker images.
+
+- **Orchestration:** An AWS Elastic Kubernetes Service (EKS) cluster to run the application.
+
+- **CI/CD:** A GitHub Actions workflow to automate the build, push, and deploy process.
+
+- **Autoscaling:** A Horizontal Pod Autoscaler (HPA) to automatically scale the application pods based on CPU load.
 
 ### Project Structure
 ```
@@ -37,10 +43,15 @@ This project demonstrates a complete, automated CI/CD pipeline for a simple Pyth
 ---
 #### 1. Infrastructure Setup
 **Prerequisites**
+
 ***i)*** An AWS Account with sufficient permissions to create EKS and ECR resources.
+
 ***ii)*** Terraform installed.
+
 ***iii)*** AWS CLI installed and configured.
+
 ***iv)*** kubectl installed.
+
 ***v)*** Docker Desktop installed.
 
 #### Steps to Provision
@@ -68,9 +79,13 @@ terraform apply
 The pipeline needs a repository in ECR to push the Docker images to. You must create this manually before running the pipeline for the first time.
 
 ***i)*** Navigate to the Elastic Container Registry (ECR) service in the AWS Console.
+
 ***ii)*** Click Create repository.
+
 ***iii)*** Set "Visibility settings" to Private.
+
 ***iv)*** Enter a Repository name (e.g., b2cloud-assignment/app). This name must exactly match the value you will set in the ECR_REPOSITORY GitHub secret.
+
 ***v)*** Click Create repository.
 
 ---
@@ -81,9 +96,11 @@ The pipeline requires several secrets to be configured in your GitHub repository
 
 ***i)*** Navigate to your repository's Settings > Secrets and variables > Actions and create the following Repository secrets:
 
-a) Secret Name
-b) Description
-c) Example Value
+-  Secret Name
+
+-  Description
+
+-  Example Value
 
 ```
 AWS_ACCESS_KEY_ID
@@ -134,6 +151,7 @@ Navigate to the Actions tab in your GitHub repository to monitor the workflow's 
 
 #### 4. Verification Steps
 Once the pipeline has completed successfully, you can verify that the application is running and accessible.
+
 **a) Verify the Deployment and Pods**
 Check that the deployment was successful and that your pods are in the Running state.
 ***Check the status of your deployment***
@@ -171,8 +189,9 @@ Expected Output:
 
 **c) Test the Horizontal Pod Autoscaler (HPA)**
 Watch the HPA status in one terminal window:
+```
 kubectl get hpa b2cloud-assignment -w
-
+```
 Initially, you will see TARGETS as <unknown>/10% or 0%/10% with 1 replicas.
 
 Generate load on the application from a second terminal:
@@ -206,9 +225,11 @@ Hence I had to manually create a node group and then deploy the workload.
 
 
 #### 6. Summary
-This was cool and good project that I liked to create and play around. There are many other ways that this could be improved and real world or in production, I would deploy an "Ingress-Nginx" and then have the SSL certificate in place with automation to update it before expiry. I would use a domain to configure the URLs.
-Metrics monitoring using nodeexporter,prometheus and grafana could be stood up.
+This was cool and good project that I liked to create and play around. There are many other ways that this could be improved and real world or in production, I would deploy an "Ingress-Nginx" and then have the SSL certificate in place with automation to update it before expiry. 
+
+I would use a domain to configure the URLs.Metrics monitoring using nodeexporter,prometheus and grafana could be stood up.
 Application monitoring via filebeat/fluentd,logstash,elasticsearch and kibana can be setup.
+
 So there are several other things that would be needed in real world but since this simply a mock test assignment, we should be good.
 
 Please feel free to connect and ask if you have any queries.
